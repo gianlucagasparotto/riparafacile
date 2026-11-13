@@ -1,0 +1,487 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#000000"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="RiparaFacile"><style>html{color-scheme:dark;background:#000;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>RiparaFacile</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: stile Apple. Barra sfocata in alto, titolo grande centrato, ricerca a pillola,
+   poi una scheda bianca con angoli ampi: foto, tre dati, avviso, attrezzi e passaggi in elenco raggruppato. */
+:root {
+  --bg: #000000;
+  --surface: #1c1c1e;
+  --fill: #2c2c2e;
+  --ink: #f5f5f7;
+  --muted: #98989d;
+  --hair: #38383a;
+  --accent: #2997ff;
+  --accent-ink: #00162e;
+  --accent-soft: #0b2a4a;
+  --nav: rgba(0, 0, 0, 0.72);
+  --warn-bg: #33260a;
+  --warn-ink: #ffd89a;
+  --err: #ff6961;
+  --shadow: none;
+  --blob1: #0a5bd6;
+  --blob2: #6b3fd1;
+  --blob3: #0c8f86;
+  --blob-op: .42;
+  color-scheme: dark;
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #000000;
+    --surface: #1c1c1e;
+    --fill: #2c2c2e;
+    --ink: #f5f5f7;
+    --muted: #98989d;
+    --hair: #38383a;
+    --accent: #2997ff;
+    --accent-ink: #00162e;
+    --accent-soft: #0b2a4a;
+    --nav: rgba(0, 0, 0, 0.72);
+    --warn-bg: #33260a;
+    --warn-ink: #ffd89a;
+    --err: #ff6961;
+    --shadow: none;
+    --blob1: #0a5bd6;
+    --blob2: #6b3fd1;
+    --blob3: #0c8f86;
+    --blob-op: .38;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #000000;
+  --surface: #1c1c1e;
+  --fill: #2c2c2e;
+  --ink: #f5f5f7;
+  --muted: #98989d;
+  --hair: #38383a;
+  --accent: #2997ff;
+  --accent-ink: #00162e;
+  --accent-soft: #0b2a4a;
+  --nav: rgba(0, 0, 0, 0.72);
+  --warn-bg: #33260a;
+  --warn-ink: #ffd89a;
+  --err: #ff6961;
+  --shadow: none;
+  --blob1: #0a5bd6;
+  --blob2: #6b3fd1;
+  --blob3: #0c8f86;
+  --blob-op: .38;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 17px;
+  line-height: 1.47;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 72px;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--nav); -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px); }
+
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9; background: var(--nav); -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid var(--hair); }
+.nav-in { max-width: 980px; margin: 0 auto; height: 48px; display: flex; align-items: center; justify-content: center; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); font-weight: 600; font-size: 1.05rem; letter-spacing: -0.02em; }
+.nav-in span { color: var(--accent); margin-right: 1px; }
+
+.bg { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.blob { position: absolute; border-radius: 50%; filter: blur(70px); opacity: var(--blob-op); will-change: transform; }
+.blob.b1 { width: 52vmax; height: 52vmax; background: var(--blob1); top: -18vmax; left: -14vmax; animation: drift1 26s ease-in-out infinite alternate; }
+.blob.b2 { width: 46vmax; height: 46vmax; background: var(--blob2); top: 8vmax; right: -16vmax; animation: drift2 32s ease-in-out infinite alternate; }
+.blob.b3 { width: 44vmax; height: 44vmax; background: var(--blob3); bottom: -20vmax; left: 18vw; animation: drift3 38s ease-in-out infinite alternate; }
+@keyframes drift1 { from { transform: translate(0, 0) scale(1); } to { transform: translate(14vmax, 10vmax) scale(1.18); } }
+@keyframes drift2 { from { transform: translate(0, 0) scale(1.1); } to { transform: translate(-16vmax, 14vmax) scale(.9); } }
+@keyframes drift3 { from { transform: translate(0, 0) scale(.95); } to { transform: translate(-12vmax, -12vmax) scale(1.2); } }
+@media (prefers-reduced-motion: reduce) { .blob { animation: none; } }
+.wrap { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+.hero { text-align: center; padding-block: clamp(44px, 9vw, 88px) 32px; }
+h1 { font-size: clamp(2.5rem, 9vw, 4.4rem); line-height: 1.04; font-weight: 700; letter-spacing: -0.035em; margin: 0; text-wrap: balance; }
+.lead { margin: 16px auto 0; color: var(--muted); font-size: clamp(1.1rem, 3.4vw, 1.4rem); line-height: 1.3; letter-spacing: -0.015em; max-width: 30ch; text-wrap: balance; }
+
+.searchbar { display: flex; align-items: center; gap: 8px; background: var(--surface); border-radius: 999px; box-shadow: var(--shadow); border: 1px solid var(--hair); padding: 8px 8px 8px 20px; max-width: 600px; margin: 0 auto; }
+.searchbar:focus-within { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+.searchbar svg.lens { flex: none; width: 20px; height: 20px; color: var(--muted); }
+.searchbar input { flex: 1; min-width: 0; font: inherit; font-size: 1.1rem; letter-spacing: -0.01em; color: var(--ink); background: transparent; border: 0; outline: 0; padding: 10px 4px; }
+.searchbar input::placeholder { color: var(--muted); }
+.go { flex: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; font: inherit; font-weight: 600; font-size: 1rem; background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 999px; height: 44px; padding: 0 22px; cursor: pointer; }
+.go:hover { filter: brightness(1.08); }
+.go:disabled { opacity: .55; cursor: progress; }
+a:focus-visible, .chip:focus-visible, .go:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+.chips { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+.chip { font: inherit; font-size: .95rem; letter-spacing: -0.01em; background: var(--surface); color: var(--ink); border: 1px solid var(--hair); border-radius: 999px; padding: 7px 16px; cursor: pointer; }
+.chip:hover { background: var(--accent-soft); border-color: transparent; color: var(--accent); }
+
+.status { color: var(--muted); display: flex; align-items: center; justify-content: center; gap: 12px; text-align: center; padding: 24px 0; }
+.status[hidden] { display: none; }
+.status.error { color: var(--err); }
+.spinner { width: 20px; height: 20px; border: 3px solid var(--hair); border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite; flex: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .spinner { animation-duration: 3s; } }
+
+.sheet { background: var(--surface); border-radius: 28px; box-shadow: var(--shadow); overflow: hidden; margin-top: 16px; }
+.photo { background: linear-gradient(160deg, var(--accent-soft), var(--fill)); color: var(--accent); display: flex; align-items: center; justify-content: center; aspect-ratio: 16 / 10; max-width: 100%; overflow: hidden; }
+.photo svg { width: 56%; height: 82%; }
+.photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.credit { margin: 0; padding: 8px 24px 0; font-size: .75rem; color: var(--muted); text-align: right; }
+.credit a { color: inherit; }
+.body { padding: 28px clamp(18px, 5vw, 36px) 36px; display: flex; flex-direction: column; gap: 28px; }
+.title-row { display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+.title-row h2 { font-size: clamp(1.8rem, 6vw, 2.5rem); line-height: 1.08; font-weight: 700; letter-spacing: -0.03em; margin: 0; text-wrap: balance; }
+.demo-badge { font-size: .75rem; font-weight: 600; color: var(--muted); background: var(--fill); border-radius: 999px; padding: 4px 12px; }
+.summary { margin: -14px 0 0; color: var(--muted); font-size: 1.1rem; line-height: 1.4; }
+
+.facts { margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.fact { background: var(--fill); border-radius: 18px; padding: 14px 16px; min-width: 0; }
+.fact dt { font-size: .8rem; color: var(--muted); }
+.fact dd { margin: 2px 0 0; font-weight: 600; font-size: 1.15rem; letter-spacing: -0.02em; overflow-wrap: anywhere; }
+@media (max-width: 480px) { .facts { grid-template-columns: 1fr; } .fact { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; } .fact dd { margin: 0; } }
+
+.warn { background: var(--warn-bg); color: var(--warn-ink); border-radius: 18px; padding: 16px 18px; display: flex; gap: 14px; align-items: flex-start; }
+.warn svg { flex: none; width: 24px; height: 24px; margin-top: 1px; }
+.warn strong { display: block; font-weight: 600; }
+
+h3 { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.025em; margin: 0 0 12px; }
+.tools { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.tools li { background: var(--fill); border-radius: 999px; padding: 7px 16px; font-size: .98rem; }
+
+ol.steps { list-style: none; margin: 0; padding: 0; counter-reset: s; background: var(--fill); border-radius: 20px; overflow: hidden; }
+ol.steps li { counter-increment: s; display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 14px; align-items: start; padding: 16px 18px; }
+ol.steps li + li { border-top: 1px solid var(--hair); }
+ol.steps li::before { content: counter(s); font-weight: 600; font-size: .95rem; width: 30px; height: 30px; display: grid; place-items: center; background: var(--accent); color: var(--accent-ink); border-radius: 50%; margin-top: 1px; }
+ol.steps b { display: block; font-weight: 600; letter-spacing: -0.015em; }
+ol.steps span { color: var(--muted); font-size: .98rem; }
+
+.sources { margin: 0; padding-left: 1.1em; font-size: .95rem; display: flex; flex-direction: column; gap: 4px; }
+.sources a { color: var(--accent); text-decoration: none; overflow-wrap: anywhere; }
+.sources a:hover { text-decoration: underline; }
+.tag { display: block; width: fit-content; margin-top: 8px; font-size: .72rem; font-weight: 600; letter-spacing: 0; border-radius: 999px; padding: 2px 10px; text-decoration: none; }
+.tag.web { background: var(--accent-soft); color: var(--accent); }
+.tag.web:hover { filter: brightness(1.2); }
+.tag.ai { border: 1px solid var(--hair); color: var(--muted); }
+.ex { margin: 8px 0 0; font-size: .92rem; color: var(--muted); }
+.ex strong { color: var(--ink); font-weight: 600; }
+.ex.att strong { color: var(--warn-ink); }
+.ask { display: block; margin-top: 8px; font: inherit; font-size: .85rem; font-weight: 500; color: var(--accent); background: none; border: 0; padding: 0; cursor: pointer; }
+.ask:hover { text-decoration: underline; }
+.chat { background: var(--fill); border-radius: 20px; padding: 20px; }
+.chat h3 { margin-bottom: 4px; }
+.chat-hint { margin: 0 0 14px; color: var(--muted); font-size: .95rem; }
+.msgs { display: flex; flex-direction: column; gap: 10px; max-height: 420px; overflow-y: auto; margin-bottom: 14px; }
+.msg { max-width: 88%; padding: 10px 14px; border-radius: 18px; line-height: 1.4; overflow-wrap: anywhere; }
+.msg.me { align-self: flex-end; background: var(--accent); color: var(--accent-ink); border-bottom-right-radius: 6px; }
+.msg.ai { align-self: flex-start; background: var(--surface); border-bottom-left-radius: 6px; }
+.msg.err { color: var(--err); }
+.msrc { margin-top: 8px; display: flex; flex-direction: column; gap: 2px; font-size: .82rem; }
+.msrc a { color: var(--accent); }
+.sugg { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.sugg .chip { font-size: .88rem; padding: 6px 12px; }
+#chatform { display: flex; gap: 8px; }
+#chatform input { flex: 1; min-width: 0; font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--hair); border-radius: 999px; padding: 0 18px; height: 44px; }
+#chatform input::placeholder { color: var(--muted); }
+#chatform input:focus-visible { outline: 3px solid var(--accent); outline-offset: 0; }
+.footnote { font-size: .82rem; color: var(--muted); margin: 0; line-height: 1.4; }
+</style>
+
+<div class="bg" aria-hidden="true"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
+<nav class="nav"><div class="nav-in"><span>Ripara</span>Facile</div></nav>
+
+<main class="wrap">
+  <header class="hero">
+    <h1>Cosa vuoi riparare?</h1>
+    <p class="lead">Scrivi cosa si è rotto. Ti mostro come aggiustarlo.</p>
+  </header>
+
+  <form id="form" autocomplete="off">
+    <div class="searchbar">
+      <svg class="lens" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <label for="q" hidden>Oggetto da riparare</label>
+      <input id="q" name="q" type="text" placeholder="Per esempio: rubinetto che gocciola" maxlength="80" required>
+      <button id="go" class="go" type="submit">Cerca</button>
+    </div>
+  </form>
+
+  <div class="chips" id="chips">
+    <button type="button" class="chip" data-q="rubinetto che gocciola">Rubinetto che gocciola</button>
+    <button type="button" class="chip" data-q="cerniera lampo">Cerniera lampo</button>
+    <button type="button" class="chip" data-q="catena della bici">Catena della bici</button>
+    <button type="button" class="chip" data-q="lampada da tavolo">Lampada da tavolo</button>
+  </div>
+
+  <div id="status" class="status" hidden role="status" aria-live="polite"></div>
+  <article id="result" hidden></article>
+</main>
+
+<script>
+/* ---------- Configurazione ----------
+   Quando pubblichi il sito (vedi README), il server risponde su /api/ripara.
+   Se il server non risponde, la pagina mostra le schede dimostrative qui sotto. */
+var API_URL = "/api/ripara";
+
+var ICONS = {
+  rubinetto: '<svg viewBox="0 0 200 140" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M40 90V60a20 20 0 0 1 20-20h50a22 22 0 0 1 22 22v8"/><path d="M132 70h16v16h-16z"/><path d="M60 40V24M46 24h28"/><path d="M140 100c-5 8-8 12-8 17a8 8 0 0 0 16 0c0-5-3-9-8-17z" fill="currentColor"/></svg>',
+  cerniera: '<svg viewBox="0 0 200 140" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M100 10v70M84 14h16M100 22h16M84 34h16M100 46h16M84 58h16M100 70h16"/><path d="M78 80h44l8 14v24a8 8 0 0 1-8 8H78a8 8 0 0 1-8-8V94z"/><circle cx="100" cy="106" r="7"/><path d="M100 80V70"/></svg>',
+  catena: '<svg viewBox="0 0 200 140" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="58" cy="70" r="28"/><circle cx="58" cy="70" r="8"/><circle cx="150" cy="82" r="14"/><circle cx="150" cy="82" r="4"/><path d="M58 42l92 26M58 98l92-2" stroke-dasharray="9 7"/><path d="M58 42v-10M50 32h16"/></svg>',
+  lampada: '<svg viewBox="0 0 200 140" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M70 12h60l22 52H48z"/><path d="M100 64v52"/><path d="M68 124h64"/><path d="M100 64l-8 14h16z" fill="currentColor"/><path d="M60 124c0-8 80-8 80 0"/></svg>',
+  generico: '<svg viewBox="0 0 200 140" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M138 22a30 30 0 0 0-36 38L38 124a10 10 0 0 0 14 14l64-64a30 30 0 0 0 38-36l-20 20-16-4-4-16z" transform="translate(0 -12) scale(.95)"/></svg>'
+};
+var WARN_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 20h20z"/><path d="M12 10v5M12 18h.01"/></svg>';
+
+var DEMO = [
+  { keys: ["rubinetto", "gocci", "perdita acqua"], icon: "rubinetto", oggetto: "Rubinetto che gocciola",
+    riassunto: "Quasi sempre la causa è una guarnizione consumata o una cartuccia da sostituire.",
+    difficolta: "Facile", tempo: "30 minuti", costo: "5–15 €",
+    sicurezza: "Chiudi il rubinetto d'arresto sotto il lavandino prima di smontare, poi apri il rubinetto per scaricare l'acqua rimasta.",
+    attrezzi: ["Chiave inglese", "Cacciavite a croce", "Guarnizione di ricambio", "Straccio"],
+    passi: [
+      { t: "Chiudi l'acqua", d: "Trova la valvola d'arresto sotto il lavandino, la piccola manopola o la vite sul tubo che sale al rubinetto. Giraci in senso orario fino a fermarla, senza forzare. Se non c'è, chiudi il rubinetto generale di casa.", controllo: "Apri il rubinetto: dopo pochi secondi l'acqua deve smettere di uscire del tutto.", attenzione: "Se la valvola non si muove, non forzare: rischi di romperla. Chiudi il generale." },
+      { t: "Tappa lo scarico", d: "Metti un tappo o uno straccio nello scarico, così le viti piccole non cadono." },
+      { t: "Smonta la maniglia", d: "Togli il tappino decorativo, svita la vite sotto e sfila la maniglia." },
+      { t: "Estrai la cartuccia", d: "Con la chiave inglese afferra il dado grande alla base della maniglia e svitalo in senso antiorario, a piccoli scatti. Sfila la cartuccia (il cilindro di plastica o ottone) tirandola dritta verso l'alto. Fotografa la posizione prima di toglierla.", controllo: "Dentro il rubinetto vedi il foro pulito, senza calcare spesso né pezzi rotti.", attenzione: "Avvolgi la chiave in uno straccio per non rigare la finitura cromata." },
+      { t: "Sostituisci il pezzo", d: "Porta il pezzo vecchio in ferramenta per trovarne uno identico. Montalo e rimonta tutto in ordine inverso." },
+      { t: "Prova", d: "Riapri la valvola d'arresto lentamente, in senso antiorario, e lascia che il tubo si riempia. Apri e chiudi il rubinetto due o tre volte per far uscire l'aria.", controllo: "Dopo 10 minuti la base e il beccuccio devono essere asciutti: passa un foglio di carta asciutta per vederlo.", attenzione: "Se goccia dalla base e non dal beccuccio, il dado non è abbastanza stretto o manca una guarnizione." }
+    ] },
+  { keys: ["cerniera", "zip", "lampo"], icon: "cerniera", oggetto: "Cerniera lampo che si apre da sola",
+    riassunto: "Il cursore si è allargato: basta stringerlo di poco per farlo tornare a chiudere i denti.",
+    difficolta: "Facile", tempo: "5 minuti", costo: "0 €",
+    sicurezza: "",
+    attrezzi: ["Pinza a punte piatte", "Straccio morbido", "Sapone secco o matita grafite"],
+    passi: [
+      { t: "Porta il cursore in basso", d: "Fai scorrere il cursore fino a metà della cerniera, dove i denti sono ben allineati." },
+      { t: "Stringi i lati", d: "Con la pinza premi leggermente i due lati del cursore, senza schiacciare troppo. Un solo colpo piccolo basta." },
+      { t: "Prova a muoverlo", d: "Fai scorrere il cursore su e giù. Se è troppo duro, allarga appena; se si apre ancora, stringi un po' di più." },
+      { t: "Lubrifica i denti", d: "Passa sapone secco o la punta di una matita sui denti per farlo scorrere meglio." }
+    ] },
+  { keys: ["catena", "bici", "bicicletta"], icon: "catena", oggetto: "Catena della bici che salta",
+    riassunto: "Di solito è sporca, secca o ha una maglia rigida. Pulirla e lubrificarla risolve nella maggior parte dei casi.",
+    difficolta: "Media", tempo: "45 minuti", costo: "5–10 €",
+    sicurezza: "",
+    attrezzi: ["Straccio", "Sgrassatore per bici", "Spazzolino vecchio", "Lubrificante per catena"],
+    passi: [
+      { t: "Metti la bici in posizione", d: "Appoggiala a un cavalletto o capovolgila sul sellino e sul manubrio, così la ruota gira libera." },
+      { t: "Sgrassa la catena", d: "Spruzza lo sgrassatore e strofina con spazzolino e straccio, facendo girare i pedali all'indietro." },
+      { t: "Cerca le maglie rigide", d: "Fai girare la catena piano e osserva dove salta: una maglia che non si piega va sciolta con le dita o sostituita." },
+      { t: "Sciacqua e asciuga", d: "Pulisci via lo sgrassatore e asciuga bene tutta la catena." },
+      { t: "Lubrifica", d: "Metti una goccia su ogni maglia mentre giri i pedali, poi togli l'eccesso con lo straccio." },
+      { t: "Prova su strada", d: "Se salta ancora sulla stessa marcia, controlla l'usura di catena e pignoni in un'officina." }
+    ] },
+  { keys: ["lampada", "luce", "abat-jour", "abatjour"], icon: "lampada", oggetto: "Lampada da tavolo che non si accende",
+    riassunto: "Prima si controlla la lampadina, poi la spina, il cavo e l'interruttore.",
+    difficolta: "Media", tempo: "20 minuti", costo: "3–12 €",
+    sicurezza: "Stacca sempre la spina dalla presa prima di toccare qualsiasi parte. Se il cavo è bruciato o spellato, non riusarlo: sostituiscilo o chiedi a un elettricista.",
+    attrezzi: ["Lampadina nuova", "Cacciavite piccolo", "Tester per continuità (facoltativo)"],
+    passi: [
+      { t: "Stacca la spina", d: "Scollega la lampada dalla presa e aspetta che la lampadina si raffreddi." },
+      { t: "Cambia la lampadina", d: "Provane una che funziona di sicuro, dello stesso tipo e della stessa potenza." },
+      { t: "Prova un'altra presa", d: "Collega la lampada a una presa che sai funzionare, per escludere un problema dell'impianto." },
+      { t: "Controlla spina e cavo", d: "Cerca segni di bruciato, tagli o fili scoperti. Se ne trovi, ferma la riparazione e sostituisci il cavo." },
+      { t: "Controlla l'interruttore", d: "Se tutto è a posto, l'interruttore è il sospettato: si sostituisce con un ricambio uguale." }
+    ] }
+];
+
+var form = document.getElementById("form");
+var input = document.getElementById("q");
+var go = document.getElementById("go");
+var statusEl = document.getElementById("status");
+var resultEl = document.getElementById("result");
+
+function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+function tag(p, d) {
+  if (p.origine === "web" && p.fonte && d.fonti && d.fonti[p.fonte - 1] && safeUrl(d.fonti[p.fonte - 1].url)) {
+    return '<a class="tag web" href="' + esc(safeUrl(d.fonti[p.fonte - 1].url)) + '" target="_blank" rel="noopener">Dal web · fonte ' + p.fonte + '</a>';
+  }
+  if (p.origine === "ai") return '<span class="tag ai">Conoscenza AI</span>';
+  return "";
+}
+function safeUrl(u) { return /^https?:\/\//i.test(u || "") ? u : ""; }
+
+function showStatus(msg, kind) {
+  statusEl.hidden = !msg;
+  statusEl.className = "status" + (kind === "error" ? " error" : "");
+  statusEl.innerHTML = kind === "loading" ? '<span class="spinner"></span><span>' + esc(msg) + "</span>" : esc(msg);
+}
+
+function findDemo(q) {
+  var t = q.toLowerCase();
+  for (var i = 0; i < DEMO.length; i++) {
+    for (var j = 0; j < DEMO[i].keys.length; j++) { if (t.indexOf(DEMO[i].keys[j]) !== -1) return DEMO[i]; }
+  }
+  return null;
+}
+
+function render(d, demo) {
+  var photo = "";
+  if (d.immagine && safeUrl(d.immagine.url)) {
+    photo = '<div class="photo"><img src="' + esc(safeUrl(d.immagine.url)) + '" alt="' + esc(d.oggetto) + '"></div>';
+    if (d.immagine.autore) {
+      var link = safeUrl(d.immagine.link);
+      photo += '<p class="credit">Foto: ' + (link ? '<a href="' + esc(link) + '" target="_blank" rel="noopener">' + esc(d.immagine.autore) + "</a>" : esc(d.immagine.autore)) + "</p>";
+    }
+  } else {
+    photo = '<div class="photo" role="img" aria-label="Illustrazione: ' + esc(d.oggetto) + '">' + (ICONS[d.icon] || ICONS.generico) + "</div>";
+  }
+  var facts = [["Difficoltà", d.difficolta], ["Tempo", d.tempo], ["Costo", d.costo]].filter(function (f) { return f[1]; })
+    .map(function (f) { return '<div class="fact"><dt>' + f[0] + "</dt><dd>" + esc(f[1]) + "</dd></div>"; }).join("");
+  var warn = d.sicurezza ? '<div class="warn" role="note">' + WARN_ICON + "<div><strong>Sicurezza</strong>" + esc(d.sicurezza) + "</div></div>" : "";
+  var tools = (d.attrezzi || []).length ? "<section><h3>Cosa ti serve</h3><ul class=\"tools\">" + d.attrezzi.map(function (a) { return "<li>" + esc(a) + "</li>"; }).join("") + "</ul></section>" : "";
+  var steps = (d.passi || []).length ? "<section><h3>Passaggi</h3><ol class=\"steps\">" + d.passi.map(function (p, i) { return "<li><div><b>" + esc(p.t) + "</b><span>" + esc(p.d) + "</span>" + stepExtra(p) + tag(p, d) + '<button type="button" class="ask" data-step="' + i + '">Chiedi su questo passaggio</button></div></li>'; }).join("") + "</ol></section>" : "";
+  var src = (d.fonti || []).filter(function (s) { return safeUrl(s.url); });
+  var sources = src.length ? "<section><h3>Fonti dal web</h3><ol class=\"sources\">" + src.map(function (s) { return '<li><a href="' + esc(safeUrl(s.url)) + '" target="_blank" rel="noopener">' + esc(s.title || s.url) + "</a></li>"; }).join("") + "</ol></section>" : "";
+  var note = demo ? '<p class="footnote">Questa è una scheda di esempio, scritta a mano. Con il server collegato la scheda viene costruita ogni volta da una ricerca sul web, con la foto vera dell\'oggetto.</p>' : '<p class="footnote">Le istruzioni uniscono quello che dicono le pagine web e la conoscenza dell’AI. I passaggi con l’etichetta AI non si appoggiano a una pagina precisa: verificali con attenzione. Se un passaggio non ti convince, fermati e chiedi a un professionista.</p>';
+
+  resultEl.innerHTML = '<div class="sheet">' + photo + '<div class="body"><div class="title-row"><h2>' + esc(d.oggetto) + "</h2>" + (demo ? '<span class="demo-badge">Esempio</span>' : "") + "</div>" +
+    (d.riassunto ? '<p class="summary">' + esc(d.riassunto) + "</p>" : "") +
+    (facts ? '<dl class="facts">' + facts + "</dl>" : "") + warn + tools + steps + CHAT_HTML + sources + note + "</div></div>";
+  resultEl.hidden = false;
+  current = d;
+  chat = [];
+  renderMsgs();
+}
+
+/* ---------- Chat: domande su come procede la riparazione ---------- */
+var API_CHAT = "/api/chiedi";
+var chat = [];
+var current = null;
+var chatBusy = false;
+var SUGG = ["Non ho questo attrezzo, cosa posso usare?", "Mi si è bloccato un pezzo, cosa faccio?", "Come capisco se ho fatto bene?", "Posso farlo da solo o serve un professionista?"];
+var CHAT_HTML = '<section class="chat"><h3>Hai un dubbio? Chiedimelo</h3><p class="chat-hint">Dimmi a che punto sei o cosa vedi, e rispondo sul tuo caso.</p><div class="msgs" id="msgs" aria-live="polite" hidden></div><div class="sugg">' +
+  SUGG.map(function (s) { return '<button type="button" class="chip sq">' + esc(s) + "</button>"; }).join("") +
+  '</div><form id="chatform" autocomplete="off"><input id="cq" type="text" maxlength="400" placeholder="Per esempio: la vite non si svita" aria-label="La tua domanda"><button id="cgo" class="go" type="submit">Invia</button></form></section>';
+
+function stepExtra(p) {
+  var h = "";
+  if (p.controllo) h += '<p class="ex"><strong>Controlla:</strong> ' + esc(p.controllo) + "</p>";
+  if (p.attenzione) h += '<p class="ex att"><strong>Attenzione:</strong> ' + esc(p.attenzione) + "</p>";
+  return h;
+}
+
+function renderMsgs() {
+  var el = document.getElementById("msgs");
+  if (!el) return;
+  el.hidden = !chat.length;
+  el.innerHTML = chat.map(function (m) {
+    if (m.loading) return '<div class="msg ai"><span class="spinner"></span></div>';
+    var src = (m.fonti || []).filter(function (s) { return safeUrl(s.url); }).map(function (s) {
+      return '<a href="' + esc(safeUrl(s.url)) + '" target="_blank" rel="noopener">' + esc(s.title || s.url) + "</a>";
+    }).join("");
+    return '<div class="msg ' + (m.role === "user" ? "me" : "ai") + (m.error ? " err" : "") + '">' + esc(m.content).replace(/\n/g, "<br>") + (src ? '<div class="msrc">' + src + "</div>" : "") + "</div>";
+  }).join("");
+  el.scrollTop = el.scrollHeight;
+}
+
+function ask(text) {
+  text = (text || "").trim();
+  if (!text || chatBusy || !current) return;
+  chatBusy = true;
+  var thread = chat;
+  var loading = { loading: true };
+  thread.push({ role: "user", content: text });
+  thread.push(loading);
+  renderMsgs();
+  var btn = document.getElementById("cgo");
+  if (btn) btn.disabled = true;
+
+  var history = thread.filter(function (m) { return !m.loading && !m.error; }).map(function (m) { return { role: m.role, content: m.content }; }).slice(-10);
+  var payload = { oggetto: current.oggetto, passi: (current.passi || []).map(function (p) { return { t: p.t, d: p.d }; }), messaggi: history };
+  var ctl = typeof AbortController !== "undefined" ? new AbortController() : null;
+  var timer = ctl ? setTimeout(function () { ctl.abort(); }, 60000) : null;
+
+  fetch(API_CHAT, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(payload), signal: ctl ? ctl.signal : undefined })
+    .then(function (r) {
+      var type = r.headers.get("content-type") || "";
+      if (!r.ok && type.indexOf("json") === -1) throw new Error("server non disponibile");
+      if (type.indexOf("json") === -1) throw new Error("server non disponibile");
+      return r.json();
+    })
+    .then(function (data) {
+      thread.splice(thread.indexOf(loading), 1);
+      if (data.errore || !data.risposta) thread.push({ role: "assistant", content: data.errore || "Non ho ricevuto una risposta. Riprova.", error: true });
+      else thread.push({ role: "assistant", content: data.risposta, fonti: data.fonti });
+    })
+    .catch(function () {
+      thread.splice(thread.indexOf(loading), 1);
+      thread.push({ role: "assistant", content: "Il server non è ancora collegato, quindi qui non posso rispondere. Dopo la pubblicazione su Vercel potrai fare domande su ogni passaggio.", error: true });
+    })
+    .then(function () {
+      if (timer) clearTimeout(timer);
+      chatBusy = false;
+      if (thread === chat) { var b = document.getElementById("cgo"); if (b) b.disabled = false; renderMsgs(); }
+    });
+}
+
+function search(q) {
+  q = q.trim();
+  if (!q) return;
+  go.disabled = true;
+  resultEl.hidden = true;
+  showStatus("Cerco come si ripara…", "loading");
+
+  var done = function () { go.disabled = false; };
+  var ctl = typeof AbortController !== "undefined" ? new AbortController() : null;
+  var timer = ctl ? setTimeout(function () { ctl.abort(); }, 60000) : null;
+
+  fetch(API_URL + "?q=" + encodeURIComponent(q), ctl ? { signal: ctl.signal } : {})
+    .then(function (r) {
+      var type = r.headers.get("content-type") || "";
+      if (!r.ok || type.indexOf("json") === -1) throw new Error("server non disponibile");
+      return r.json();
+    })
+    .then(function (data) {
+      if (timer) clearTimeout(timer);
+      if (data.errore) { showStatus(data.errore, "error"); return; }
+      showStatus("");
+      render(data, false);
+    })
+    .catch(function () {
+      if (timer) clearTimeout(timer);
+      var demo = findDemo(q);
+      if (demo) { showStatus(""); render(demo, true); }
+      else { showStatus("Il server non è ancora collegato, quindi posso mostrarti solo gli esempi: rubinetto, cerniera lampo, catena della bici, lampada."); }
+    })
+    .then(done);
+}
+
+form.addEventListener("submit", function (e) { e.preventDefault(); search(input.value); });
+document.getElementById("chips").addEventListener("click", function (e) {
+  var b = e.target.closest(".chip");
+  if (!b) return;
+  input.value = b.getAttribute("data-q");
+  search(input.value);
+});
+
+resultEl.addEventListener("submit", function (e) {
+  if (e.target.id !== "chatform") return;
+  e.preventDefault();
+  var field = document.getElementById("cq");
+  var t = field.value;
+  field.value = "";
+  ask(t);
+});
+resultEl.addEventListener("click", function (e) {
+  var sq = e.target.closest(".sq");
+  if (sq) { ask(sq.textContent); return; }
+  var a = e.target.closest(".ask");
+  if (a && current) {
+    var n = parseInt(a.getAttribute("data-step"), 10);
+    var p = current.passi[n];
+    var field = document.getElementById("cq");
+    if (!p || !field) return;
+    field.value = "Sul passaggio " + (n + 1) + " (" + p.t + "): ";
+    field.focus();
+    field.scrollIntoView({ block: "center" });
+  }
+});
+
+/* Apre già con una scheda di esempio, così si vede subito cosa fa il sito. */
+input.value = "rubinetto che gocciola";
+render(DEMO[0], true);
+</script>
+
+</html>
